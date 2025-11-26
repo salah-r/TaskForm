@@ -52,7 +52,7 @@ export class FormTaskComponent implements OnInit {
     this.staticDataService.selectedCategory$.subscribe(category => {
       if (category) {
         this.selectedCategory = category;
-        this.adForm.patchValue({ categoryId: category.id });
+        this.categoryId.patchValue(category.id);
       } else {
         this.selectCategory(this.categories[0])
       }
@@ -143,19 +143,19 @@ export class FormTaskComponent implements OnInit {
     // Select first currency by default
     if (this.currencies.length > 0) {
       this.selectedCurrency = this.currencies[0];
-      this.adForm.patchValue({ currency: this.currencies[0].code });
+      this.currency.patchValue(this.currencies[0].code);
     }
     // Select first country code by default
     if (this.countryCodes.length > 0) {
       this.selectedCountryCode = this.countryCodes[0];
-      this.adForm.patchValue({ countryCode: this.countryCodes[0].code });
+      this.countryCode.patchValue(this.countryCodes[0].code);
     }
   }
 
   // Category Selection (Two-way sync)
   selectCategory(category: ICategory) {
     this.selectedCategory = category;
-    this.adForm.patchValue({ categoryId: category.id });
+    this.categoryId.patchValue(category.id);
     this.staticDataService.setSelectedCategory(category);
 
   }
@@ -172,7 +172,7 @@ export class FormTaskComponent implements OnInit {
 
   selectCurrency(currency: ICurrency) {
     this.selectedCurrency = currency;
-    this.adForm.patchValue({ currency: currency.code });
+    this.currency.patchValue(currency.code);
     this.isCurrencyDropdownOpen = false;
   }
 
@@ -184,22 +184,17 @@ export class FormTaskComponent implements OnInit {
 
   selectCountryCode(country: ICountryCode) {
     this.selectedCountryCode = country;
-    this.adForm.patchValue({ countryCode: country.code });
+    this.countryCode.patchValue(country.code);
     this.isCountryCodeDropdownOpen = false;
   }
 
-  // Close dropdowns when clicking outside
-  closeDropdowns() {
-    this.isCurrencyDropdownOpen = false;
-    this.isCountryCodeDropdownOpen = false;
-    this.forceCurrencyClose = true
-  }
 
   // Save/Submit Function (Your Style - Button Click)
   saveAd() {
 
     if (this.adForm.valid) {
       const adData = {
+
         categoryId: this.categoryId?.value,
         adTitle: this.adTitle?.value,
         startDate: this.startDate?.value,
@@ -239,8 +234,7 @@ export class FormTaskComponent implements OnInit {
       // Optionally reset form
       this.adForm.reset();
 
-      // TODO: Call your service here
-      // this.adService.createAd(adData).subscribe({...});
+
 
     } else {
       // Mark all fields as touched to show errors
