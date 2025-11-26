@@ -1,0 +1,36 @@
+<div class="tw-h-full tw-flex tw-flex-col tw-bg-white">
+
+  <div class="tw-p-4 tw-border-b tw-border-gray-200 tw-m-auto tw-pb-0">
+    <h2 class=" tw-text-lg tw-font-semibold tw-text-gray-800 tw-flex tw-items-center tw-gap-2">
+      <i class="pi pi-th-large tw-text-primary"></i>
+      Categories
+    </h2>
+  </div>
+
+  <div class="tw-flex-1 tw-overflow-y-auto tw-p-3 tw-pt-0">
+    <ul class="tw-space-y-2 tw-inline tw-list-none">
+      <li *ngFor="let category of categories">
+        <button pRipple (click)="selectCategory(category)"
+          [class]="isSelected(category) ? 'category-item-selected' : 'category-item'"
+          class="tw-w-full tw-flex tw-items-center tw-gap-3 tw-px-4 tw-py-3 tw-rounded-xl tw-transition-all tw-duration-300 tw-text-left">
+          <!-- Icon Container -->
+          <span
+            class="tw-w-10 tw-h-10 tw-rounded-3xl tw-flex tw-items-center tw-justify-center tw-transition-all tw-duration-300"
+            [class.tw-bg-white]="isSelected(category)" [class.tw-bg-primary-light]="!isSelected(category)">
+            <i [class]="category.icon" class="tw-text-lg tw-transition-colors tw-duration-300"
+              [ngClass]="isSelected(category) ? 'tw-text-[#14C3AF]' : 'tw-text-[#14C3AF]'"></i>
+          </span>
+
+          <!-- Category Name -->
+          <span class="tw-font-medium tw-flex-1 tw-transition-colors tw-duration-300"
+            [class.tw-text-white]="isSelected(category)" [class.tw-text-gray-700]="!isSelected(category)">
+            {{ category.name }}
+          </span>
+        </button>
+      </li>
+    </ul>
+  </div>
+
+
+
+</div>

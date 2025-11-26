@@ -1,0 +1,288 @@
+<div class="post-ad-container tw-min-h-screen tw-bg-gray-50 tw-p-4 lg:tw-p-6">
+  <div class=" tw-mx-auto">
+
+    <!-- ==================== SECTION 1: CATEGORY SELECTION (Horizontal) ==================== -->
+    <div class="tw-bg-white tw-rounded-xl tw-shadow-sm tw-p-6 tw-mb-6">
+      <h3 class="tw-text-gray-700 tw-font-medium tw-mb-4">Select Category</h3>
+
+      <div class="tw-flex tw-flex-wrap tw-gap-3">
+        <button *ngFor="let category of categories" type="button" (click)="selectCategory(category)"
+          class="tw-flex tw-items-center gray-border tw-gap-3 tw-px-5 tw-py-3 tw-rounded-xl tw-transition-all tw-duration-300"
+          [ngClass]="{
+      'tw-bg-[#14C3AF] tw-border-0 tw-text-white': isSelectedCategory(category),
+
+      'tw-bg-white tw-border-2 tw-border-gray-200 tw-text-gray-700 hover:tw-bg-gray-50': !isSelectedCategory(category)
+    }">
+
+          <span
+            class="tw-w-10 tw-h-10 tw-rounded-3xl tw-flex tw-items-center tw-justify-center tw-transition-all tw-duration-300"
+            [ngClass]="{
+        'tw-bg-white': isSelectedCategory(category),
+
+        'tw-bg-primary-light': !isSelectedCategory(category)
+      }">
+            <i [class]="category.icon" class="tw-text-lg tw-transition-colors tw-duration-300" [ngClass]="{
+          'tw-text-[#14C3AF]': !isSelectedCategory(category),
+          'tw-text-[#0fbba7]': isSelectedCategory(category)
+        }"></i>
+          </span>
+
+          <span class="tw-font-medium tw-transition-colors tw-duration-300" [ngClass]="{
+        'tw-text-white': isSelectedCategory(category),
+        'tw-text-gray-700': !isSelectedCategory(category)
+      }">
+            {{ category.name }}
+          </span>
+
+        </button>
+      </div>
+
+
+      <!-- Validation Error -->
+      <div *ngIf="categoryId?.invalid && categoryId?.touched" class="tw-text-red-500 tw-text-sm tw-mt-2">
+        <i class="pi pi-exclamation-circle tw-mr-1"></i>
+        Please select a category
+      </div>
+    </div>
+
+    <!-- ==================== SECTION 2: FORM FIELDS ==================== -->
+    <div [formGroup]="adForm" class="tw-bg-white tw-rounded-xl tw-shadow-sm tw-p-6">
+
+      <!-- Row 1: Ad Title, Start Date, End Date -->
+      <div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-4 tw-gap-4 tw-mb-6">
+
+        <!-- Ad Title -->
+        <div class="tw-flex tw-flex-col">
+          <label class="tw-text-primary tw-font-medium tw-mb-2 tw-text-sm">
+            Ad Title <span class="tw-text-red-500">*</span>
+          </label>
+          <input type="text" formControlName="adTitle" placeholder="Enter ad title"
+            class="tw-w-full tw-px-4 tw-py-2.5 tw-border tw-rounded-lg tw-text-sm tw-transition-all focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-primary/20"
+            [ngClass]="{
+              'tw-border-red-500': adTitle?.invalid && adTitle?.touched,
+              'tw-border-gray-300 focus:tw-border-primary': !(adTitle?.invalid && adTitle?.touched)
+            }" />
+          <span *ngIf="adTitle?.invalid && adTitle?.touched" class="tw-text-red-500 tw-text-xs tw-mt-1">
+            Ad title is required (min 5 characters)
+          </span>
+        </div>
+
+        <!-- Start Date (with gray icon inside) -->
+        <div class="tw-flex tw-flex-col">
+          <label class="tw-text-primary tw-font-medium tw-mb-2 tw-text-sm">
+            Start Date <span class="tw-text-red-500">*</span>
+          </label>
+          <p-calendar appendTo="body" formControlName="startDate" [showIcon]="true" [iconDisplay]="'input'"
+            icon="pi pi-calendar" [minDate]="minDate" dateFormat="dd/mm/yy" placeholder="Select date"
+            styleClass="w-full custom-calendar"></p-calendar>
+          <span *ngIf="startDate?.invalid && startDate?.touched" class="tw-text-red-500 tw-text-xs tw-mt-1">
+            Start date is required
+          </span>
+        </div>
+
+        <!-- End Date (with gray icon inside) -->
+        <div class="tw-flex tw-flex-col">
+          <label class="tw-text-primary tw-font-medium tw-mb-2 tw-text-sm">
+            End Date <span class="tw-text-red-500">*</span>
+          </label>
+          <p-calendar appendTo="body" formControlName="endDate" [showIcon]="true" [iconDisplay]="'input'"
+            icon="pi pi-calendar" [minDate]="startDate?.value || minDate" dateFormat="dd/mm/yy"
+            placeholder="Select date" styleClass="w-full custom-calendar"></p-calendar>
+          <span *ngIf="endDate?.invalid && endDate?.touched" class="tw-text-red-500 tw-text-xs tw-mt-1">
+            End date is required
+          </span>
+        </div>
+
+        <!-- Cautions Until Sold -->
+        <div class="tw-flex tw-flex-col  tw-justify-end tw-pb-2">
+          <div class="tw-flex tw-items-center tw-gap-2">
+            <p-checkbox formControlName="cautionsUntilSold" [binary]="true" inputId="cautionsUntilSold"></p-checkbox>
+            <label for="cautionsUntilSold" class="tw-text-gray-600 tw-text-sm tw-cursor-pointer">
+              Cautions until sold
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: Description, Total Price + Currency, Final Price -->
+      <div class="tw-grid tw-grid-cols-1 lg:tw-grid-cols-12 tw-gap-4 tw-mb-6">
+
+        <!-- Description -->
+        <div class="lg:tw-col-span-5 tw-flex tw-flex-col">
+          <label class="tw-text-primary tw-font-medium tw-mb-2 tw-text-sm">
+            Description <span class="tw-text-red-500">*</span>
+          </label>
+          <input type="text" formControlName="description" placeholder="Enter description"
+            class="tw-w-full tw-px-4 tw-py-2.5 tw-border tw-rounded-lg tw-text-sm tw-transition-all focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-primary/20"
+            [ngClass]="{
+              'tw-border-red-500': description?.invalid && description?.touched,
+              'tw-border-gray-300 focus:tw-border-primary': !(description?.invalid && description?.touched)
+            }" />
+          <span *ngIf="description?.invalid && description?.touched" class="tw-text-red-500 tw-text-xs tw-mt-1">
+            Description is required (min 20 characters)
+          </span>
+        </div>
+
+        <!-- Total Price + Currency (COMBINED) -->
+        <div class="lg:tw-col-span-4 tw-flex tw-flex-col">
+          <label class="tw-text-primary tw-font-medium tw-mb-2 tw-text-sm">
+            Total Price <span class="tw-text-red-500">*</span>
+          </label>
+          <div class="tw-flex tw-relative">
+            <!-- Price Input -->
+            <input type="number" formControlName="totalPrice" placeholder="0.00"
+              class="tw-flex-1 tw-px-4 tw-py-2.5 tw-border tw-border-r-0 tw-rounded-l-lg tw-text-sm focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-primary/20"
+              [ngClass]="{
+                'tw-border-red-500': totalPrice?.invalid && totalPrice?.touched,
+                'tw-border-gray-300 focus:tw-border-primary': !(totalPrice?.invalid && totalPrice?.touched)
+              }" />
+            <!-- Currency Dropdown Button -->
+            <div class="tw-relative">
+              <button type="button" (click)="toggleCurrencyDropdown()"
+                class="tw-flex tw-items-center tw-gap-1 tw-px-3 tw-py-2.5 tw-bg-gray-50 tw-border tw-border-gray-300 tw-rounded-r-lg tw-text-sm tw-text-primary hover:tw-bg-gray-100">
+                <span>{{ selectedCurrency?.code || 'Currency' }}</span>
+                <i class="pi pi-chevron-down tw-text-xs" [class.tw-rotate-180]="isCurrencyDropdownOpen"></i>
+              </button>
+
+              <!-- Currency Dropdown -->
+              <div *ngIf="isCurrencyDropdownOpen"
+                class="tw-absolute tw-right-0 tw-top-full tw-mt-1 tw-w-40 tw-bg-white tw-border tw-border-gray-200 tw-rounded-lg tw-shadow-lg tw-z-50">
+                <ul class="tw-py-1 tw-pl-0  tw-max-h-48 tw-overflow-y-auto">
+                  <li *ngFor="let curr of currencies" (click)="selectCurrency(curr)"
+                    class="tw-flex tw-items-center tw-gap-2 tw-px-3 tw-py-2 tw-cursor-pointer tw-text-sm hover:tw-bg-primary-light"
+                    [class.tw-bg-primary-light]="selectedCurrency?.code === curr.code">
+                    <span>{{ curr.flag }}</span>
+                    <span class="tw-flex-1">{{ curr.code }}</span>
+                    <i *ngIf="selectedCurrency?.code === curr.code" class="pi pi-check tw-text-primary tw-text-xs"></i>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <span *ngIf="totalPrice?.invalid && totalPrice?.touched" class="tw-text-red-500 tw-text-xs tw-mt-1">
+            Total price is required
+          </span>
+        </div>
+
+        <!-- Final Price -->
+        <div class="lg:tw-col-span-3 tw-flex tw-flex-col">
+          <label class="tw-text-gray-700 tw-font-medium tw-mb-2 tw-text-sm">Final Price:</label>
+          <div class="tw-flex tw-items-center tw-gap-4 tw-py-2">
+            <div class="tw-flex tw-items-center tw-gap-2">
+              <p-radioButton name="finalPrice" value="yes" formControlName="finalPrice"
+                inputId="finalPriceYes"></p-radioButton>
+              <label for="finalPriceYes" class="tw-text-primary tw-text-sm tw-cursor-pointer">Yes</label>
+            </div>
+            <div class="tw-flex tw-items-center tw-gap-2">
+              <p-radioButton name="finalPrice" value="no" formControlName="finalPrice"
+                inputId="finalPriceNo"></p-radioButton>
+              <label for="finalPriceNo" class="tw-text-gray-600 tw-text-sm tw-cursor-pointer">No</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 3: Payment Type, Payment Option -->
+      <div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 tw-gap-4 tw-mb-6">
+
+        <!-- Payment Type -->
+        <div class="tw-flex tw-flex-col">
+          <label class="tw-text-gray-700 tw-font-medium tw-mb-2 tw-text-sm">Payment Type:</label>
+          <div class="tw-flex tw-items-center tw-gap-4">
+            <div class="tw-flex tw-items-center tw-gap-2">
+              <p-radioButton name="paymentType" value="cash" formControlName="paymentType"
+                inputId="paymentCash"></p-radioButton>
+              <label for="paymentCash" class="tw-text-primary tw-text-sm tw-cursor-pointer">Cash</label>
+            </div>
+            <div class="tw-flex tw-items-center tw-gap-2">
+              <p-radioButton name="paymentType" value="card" formControlName="paymentType"
+                inputId="paymentCard"></p-radioButton>
+              <label for="paymentCard" class="tw-text-gray-600 tw-text-sm tw-cursor-pointer">Card</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment Option -->
+        <div class="tw-flex tw-flex-col">
+          <label class="tw-text-gray-700 tw-font-medium tw-mb-2 tw-text-sm">Payment Option:</label>
+          <div class="tw-flex tw-items-center tw-gap-4">
+            <div class="tw-flex tw-items-center tw-gap-2">
+              <p-radioButton name="paymentOption" value="full" formControlName="paymentOption"
+                inputId="paymentFull"></p-radioButton>
+              <label for="paymentFull" class="tw-text-primary tw-text-sm tw-cursor-pointer">Full payment</label>
+            </div>
+            <div class="tw-flex tw-items-center tw-gap-2">
+              <p-radioButton name="paymentOption" value="installment" formControlName="paymentOption"
+                inputId="paymentInstallment"></p-radioButton>
+              <label for="paymentInstallment" class="tw-text-gray-600 tw-text-sm tw-cursor-pointer">Installment</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 4: Location Address, Additional Contact Method -->
+      <div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 tw-gap-4 tw-mb-6">
+
+        <!-- Location Address (TEXT INPUT - NOT DROPDOWN) -->
+        <div class="tw-flex tw-flex-col">
+          <label class="tw-text-primary tw-font-medium tw-mb-2 tw-text-sm">
+            Location Address <span class="tw-text-red-500">*</span>
+          </label>
+          <input type="text" formControlName="locationAddress" placeholder="Enter location address"
+            class="tw-w-full tw-px-4 tw-py-2.5 tw-border tw-rounded-lg tw-text-sm tw-transition-all focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-primary/20"
+            [ngClass]="{
+              'tw-border-red-500': locationAddress?.invalid && locationAddress?.touched,
+              'tw-border-gray-300 focus:tw-border-primary': !(locationAddress?.invalid && locationAddress?.touched)
+            }" />
+          <span *ngIf="locationAddress?.invalid && locationAddress?.touched" class="tw-text-red-500 tw-text-xs tw-mt-1">
+            Location address is required
+          </span>
+        </div>
+
+        <!-- Additional Contact Method (COMBINED: Country Code + Phone) -->
+        <div class="tw-flex tw-flex-col">
+          <label class="tw-text-gray-700 tw-font-medium tw-mb-2 tw-text-sm">Additional Contact Method</label>
+          <div class="tw-flex">
+            <!-- Country Code Dropdown -->
+            <div class="tw-relative">
+              <button type="button" (click)="toggleCountryCodeDropdown()"
+                class="tw-flex tw-items-center tw-gap-1 tw-px-3 tw-py-2.5 tw-bg-gray-50 tw-border tw-border-gray-300 tw-border-r-0 tw-rounded-l-lg tw-text-sm hover:tw-bg-gray-100">
+                <span>{{ selectedCountryCode?.code || '+252' }}</span>
+                <i class="pi pi-chevron-down tw-text-xs" [class.tw-rotate-180]="isCountryCodeDropdownOpen"></i>
+              </button>
+
+              <!-- Country Code Dropdown List -->
+              <div *ngIf="isCountryCodeDropdownOpen"
+                class="tw-absolute tw-left-0 tw-top-full tw-mt-1 tw-w-48 tw-bg-white tw-border tw-border-gray-200 tw-rounded-lg tw-shadow-lg tw-z-50">
+                <ul class="tw-py-1  tw-pl-0 tw-max-h-48 tw-overflow-y-auto">
+                  <li *ngFor="let country of countryCodes" (click)="selectCountryCode(country)"
+                    class="tw-flex tw-items-center tw-gap-2 tw-px-3 tw-py-2 tw-cursor-pointer tw-text-sm hover:tw-bg-primary-light"
+                    [class.tw-bg-primary-light]="selectedCountryCode?.code === country.code">
+                    <span class="tw-flex-1">{{ country.country }}</span>
+                    <span class="tw-text-gray-500">{{ country.code }}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Phone Number Input -->
+            <input type="tel" formControlName="phoneNumber" placeholder="Phone number"
+              class="tw-flex-1 tw-px-4 tw-py-2.5 tw-border tw-border-gray-300 tw-rounded-r-lg tw-text-sm focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-primary/20 focus:tw-border-primary" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button (Using Button Click - NOT onSubmit) -->
+      <div class="tw-flex tw-justify-end tw-pt-4 tw-border-t tw-border-gray-100">
+        <button pButton pRipple type="button" (click)="saveAd()" label="Post Ad" icon="pi pi-check"
+          class="p-button-md"></button>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- Click outside to close dropdowns -->
+<div *ngIf="isCurrencyDropdownOpen || isCountryCodeDropdownOpen" class="tw-fixed tw-inset-0 tw-z-40"
+  (click)="closeDropdowns()"></div>

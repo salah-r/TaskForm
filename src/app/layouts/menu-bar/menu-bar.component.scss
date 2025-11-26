@@ -1,0 +1,113 @@
+.menubar {
+  width: 100%;
+  text-align: center;
+}
+i {
+  color: white;
+  margin-left: 20px;
+}
+svg {
+  color: white;
+  margin-left: 20px;
+}
+.menubar .top-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.menubar .middle-link {
+  align-items: start;
+  margin-left: 3%;
+}
+.menubar .link-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: aliceblue;
+  font-size: 1.5rem;
+}
+.menubar a {
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  transition: 0.3s;
+  display: flex;
+  justify-content: flex-start !important;
+  align-items: center;
+  width: fit-content;
+  padding: 4%;
+  margin-left: 5%;
+}
+.menubar .hover-left-border {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 5%;
+  margin-left: -40%;
+}
+.hover-left-border {
+  position: relative !important;
+}
+.hover-left-border::before {
+  content: ""; /* Create an empty content */
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 30%; /* 10% width for the yellow border */
+  background-color: yellow; /* Yellow color for the left border */
+  opacity: 0; /* Initially invisible */
+  transition: opacity 0.3s; /* Smooth transition */
+}
+
+.hover-left-border:hover::before {
+  opacity: 1; /* Make the yellow border visible on hover */
+}
+.hover-left-border:hover {
+  background-color: rgba(
+    255,
+    196,
+    0,
+    0.336
+  ); /* Transparent yellow background */
+}
+.back-btn {
+  display: flex;
+  justify-content: flex-start;
+  // align-items: center;
+  flex-direction: row;
+  //margin-left: -120%;
+}
+.menubar {
+  position: relative;
+  border-radius: 0%;
+}
+.back-btn {
+  position: absolute;
+  top: 2%;
+  left: 5%;
+}
+.back-btn button {
+  background-color: transparent;
+  border: 0;
+  // border: 2px solid white;
+  border-radius: 50%;
+}
+a h1 {
+  margin-left: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.topBar {
+  border-top-left-radius: 50px;
+}
+@media (max-height: 1200px) {
+  .menubar .top-link {
+    margin-top: 5% !important;
+  }
+  .menubar a {
+    padding: 2%;
+  }
+}

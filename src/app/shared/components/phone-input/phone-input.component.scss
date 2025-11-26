@@ -1,0 +1,43 @@
+$primary-color: #14C3AF;
+$primary-light: rgba(20, 195, 175, 0.1);
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.phone-input-container {
+  width: 100%;
+}
+
+.tw-text-primary {
+  color: $primary-color;
+}
+
+.tw-bg-primary-light {
+  background-color: $primary-light;
+}
+
+.hover\:tw-bg-primary-light:hover {
+  background-color: $primary-light;
+}
+
+.focus\:tw-border-primary:focus {
+  border-color: $primary-color;
+}
+
+.focus\:tw-ring-primary\/20:focus {
+  --tw-ring-color: rgba(20, 195, 175, 0.2);
+}
+
+// Scrollbar
+ul {
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $primary-color;
+    border-radius: 3px;
+  }
+}

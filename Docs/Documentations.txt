@@ -1,0 +1,2 @@
+PrimaryMember ( Base Crud operations) -- (the rest of PrimaryMember -validations)
+SecondaryMember( Crud operations Related With PrimaryMember)--(the rest of SecondaryMember -validations)

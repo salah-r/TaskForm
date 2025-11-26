@@ -1,0 +1,49 @@
+<div class="currency-selector tw-relative" (clickOutside)="closeDropdown()">
+
+  <!-- Selected Value / Trigger Button -->
+  <button type="button" (click)="toggleDropdown()" [disabled]="disabled"
+    class="tw-w-full tw-flex tw-items-center tw-justify-between tw-gap-2 tw-px-4 tw-py-3 tw-bg-white tw-border tw-border-gray-300 tw-rounded-lg tw-transition-all tw-duration-200 hover:tw-border-primary focus:tw-outline-none focus:tw-border-primary focus:tw-ring-2 focus:tw-ring-primary/20"
+    [class.tw-border-primary]="isOpen" [class.tw-opacity-50]="disabled" [class.tw-cursor-not-allowed]="disabled">
+    <!-- Display Selected or Placeholder -->
+    <span class="tw-flex tw-items-center tw-gap-2" [class.tw-text-gray-400]="!selectedCurrency"
+      [class.tw-text-gray-700]="selectedCurrency">
+      <span *ngIf="selectedCurrency" class="tw-text-lg">{{ selectedCurrency.flag }}</span>
+      <span *ngIf="selectedCurrency; else placeholderTpl">
+        {{ selectedCurrency.code }}
+      </span>
+      <ng-template #placeholderTpl>
+        <span class="tw-text-primary">{{ placeholder }}</span>
+      </ng-template>
+    </span>
+
+    <!-- Dropdown Arrow -->
+    <i class="pi pi-chevron-down tw-text-primary tw-transition-transform tw-duration-200"
+      [class.tw-rotate-180]="isOpen"></i>
+  </button>
+
+  <!-- Dropdown Menu -->
+  <div *ngIf="isOpen"
+    class="tw-absolute tw-z-50 tw-w-full tw-mt-1 tw-bg-white tw-border tw-border-gray-200 tw-rounded-lg tw-shadow-lg tw-overflow-hidden tw-animate-fadeIn">
+    <ul class="tw-max-h-60 tw-overflow-y-auto">
+      <li *ngFor="let currency of currencies" (click)="selectCurrency(currency)"
+        class="tw-flex tw-items-center tw-gap-3 tw-px-4 tw-py-3 tw-cursor-pointer tw-transition-colors tw-duration-150 hover:tw-bg-primary-light"
+        [class.tw-bg-primary-light]="selectedCurrency?.code === currency.code">
+        <!-- Flag -->
+        <span class="tw-text-xl">{{ currency.flag }}</span>
+
+        <!-- Currency Info -->
+        <div class="tw-flex-1">
+          <span class="tw-font-medium tw-text-gray-800">{{ currency.code }}</span>
+          <span class="tw-text-gray-500 tw-text-sm tw-ml-2">{{ currency.name }}</span>
+        </div>
+
+        <!-- Symbol -->
+        <span class="tw-text-gray-400 tw-font-medium">{{ currency.symbol }}</span>
+
+        <!-- Check Mark -->
+        <i *ngIf="selectedCurrency?.code === currency.code" class="pi pi-check tw-text-primary"></i>
+      </li>
+    </ul>
+  </div>
+
+</div>

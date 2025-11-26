@@ -1,0 +1,79 @@
+<header class=" tw-flex-row tw-justify-center tw-items-start tw-gap-40 tw-h-10 tw-mt-7 tw-block tw-w-full">
+  <div class="tw-flex tw-flex-row tw-justify-start tw-items-center tw-gap-4 tw-w-full">
+    <button style="background-color: rgb(255, 255, 255)"
+      class="toggle-btn tw-cursor-pointer tw-border-0 tw-transition-all tw-duration-300 hover:tw-py-2"
+      (click)="toggleDropdown()">
+      <i class="pi pi-bars tw-font-bold tw-text-2xl"></i>
+    </button>
+    <div class="header tw-flex tw-items-center tw-w-full tw-justify-between ">
+      <h4 class="tw-text-3xl tw-font-bold  tw-m-0 tw-font-oblique">مرحبا بعودتك </h4>
+
+      <!-- <div class="tw-relative tw-flex tw-items-center tw-content-center">
+        <input pInputText type="text" class=" modifiedInput tw-h-14 tw-pr-10" pSize="large" placeholder="بحث" />
+        <i class="staticPosition pi pi-search"></i>
+      </div> -->
+      <div class="tw-flex">
+        <img class="tw-ml-4" style="cursor: pointer;" src="../../../assets/images/notifications.png" alt="">
+        <img class="tw-ml-4" style="cursor: pointer;" src=" ../../../assets/images/browser.png" alt="">
+        <img src="../../../assets/images/profile.png" style="cursor: pointer;" alt="">
+      </div>
+
+
+    </div>
+
+  </div>
+  <!-- <div
+    class="search-container tw-flex tw-items-center tw-border tw-border-blue-600 tw-rounded-full tw-py-1 tw-px-2 tw-bg-white"
+  >
+    <input
+      type="text"
+      placeholder="Search"
+      class="custom-placeholder tw-outline-none tw-flex-1 tw-text-lg tw-font-bold tw-placeholder-blue-600"
+    />
+    <i class="pi pi-search tw-text-blue-600 tw-text-2xl"></i>
+  </div> -->
+
+
+
+  <!-- Fullscreen dropdown menu for mobile -->
+  <div *ngIf="isDropdownOpen && isMobileView" class="mobile-sidebar-overlay">
+    <button class="close-btn" (click)="toggleDropdown()">✕</button>
+
+    <div
+      class="sidebar tw-h-full tw-w-full tw-flex tw-flex-col tw-justify-between tw-items-center tw-p-2.5 tw-box-border tw-rounded-l-[50px] tw-transition-width tw-duration-300"
+      [ngClass]="{ expanded: isSidebarExpanded }" style="overflow: auto">
+
+      <div routerLink="/home" class="top-link tw-flex">
+        <img class="logo" src="../../../assets/images/logo.png" alt="" />
+      </div>
+
+      <div class="line"></div>
+
+      <div
+        class="middle-links tw-flex tw-flex-col tw-justify-self-start tw-relative tw-flex-grow tw-text-center tw-w-full tw-mt-9">
+        <div routerLink="/accounts" class="hover-left-border ">
+          <a routerLink="/accounts" class="tw-text-center  tw-p-0 tw-text-xl tw-font-bold tw-text-white tw-transition"
+            (click)="onLinkClick()">
+            <img class="icons" src="../../../assets/images/users.png" alt="">
+            <h2 class="link-content tw-text-white tw-text-2xl  ">الحسابات</h2>
+          </a>
+        </div>
+        <div routerLink="/shipments" class="hover-left-border">
+          <a routerLink="/shipments" class="tw-text-center tw-p-0 tw-text-xl tw-font-bold tw-text-white tw-transition"
+            (click)="onLinkClick()">
+            <img class="icons" src="../../../assets/images/car icon.png" alt="">
+            <h2 class="link-content  tw-text-white tw-text-2xl ">الشحنات</h2>
+          </a>
+        </div>
+
+
+        <div class="orderImage"><img src="../../../assets/images/order.png" alt=""></div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+</header>

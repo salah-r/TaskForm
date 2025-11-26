@@ -1,0 +1,340 @@
+:host {
+  display: block;
+  height: 100%;
+  text-align: center;
+
+}
+
+// Scrollbar styling
+.tw-overflow-y-auto {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+
+    &:hover {
+      background: #a1a1a1;
+    }
+  }
+}
+
+
+
+
+
+
+
+// .sidebar {
+//   // border-top-right-radius: 60px;
+//   // border-bottom-right-radius: 60px;
+//   border-top-left-radius: 0px;
+//   border-bottom-left-radius: 0px;
+//   background-color: #2A2A2A;
+// }
+
+// .logo {
+//   margin-top: 20px;
+//   width: 7vw;
+//   margin-bottom: 0px !important;
+// }
+
+// .sidebar a {
+//   padding: 10px 20px;
+//   text-decoration: none;
+//   font-size: 1.2rem;
+//   font-weight: bold;
+//   color: white;
+//   transition: 0.3s;
+// }
+
+// .sidebar i {
+//   color: white;
+// }
+
+// .link-content {
+//   display: none;
+// }
+
+// .sidebar.expanded {
+//   // border-top-right-radius: 60px;
+//   display: flex;
+//   justify-content: flex-start;
+//   align-items: flex-start;
+//   gap: 10%;
+//   overflow-x: hidden !important;
+
+
+// }
+
+
+
+// .sidebar.expanded a {
+//   display: flex;
+//   //justify-content: flex-start;
+//   align-items: center;
+//   // gap: 3%;
+// }
+
+// .sidebar.expanded .link-content {
+//   display: inline-block;
+//   /* Ensure inline display */
+//   margin-left: 10px !important;
+//   /* Add margin to create space between the icon and text */
+//   white-space: nowrap !important;
+//   /* Prevent text wrapping */
+//   color: aliceblue;
+//   font-size: 1.5rem;
+// }
+
+// .sidebar.expanded a svg {
+//   flex-shrink: 0 !important;
+//   /* Prevent svg from shrinking */
+// }
+
+// .sidebar.expanded .top-link {
+//   margin-bottom: 35px;
+// }
+
+// .sidebar.expanded .middle-links {
+//   // padding-top: 190px;
+//   margin-left: -2%;
+//   width: 100% !important;
+//   // margin-top: 20% !important;
+// }
+
+
+
+
+// .sidebar.expanded .bottom-link {
+//   display: none;
+// }
+
+// .toggler-btn {
+//   display: none;
+// }
+
+// .hover-left-border {
+//   padding: 5%;
+//   width: 100%;
+//   position: relative;
+//   display: flex;
+//   align-items: center;
+//   justify-items: center;
+//   //z-index: 0; /* Ensure that hover-rect is positioned relative to this element */
+// }
+
+// .hover-left-border a {
+//   display: flex;
+//   justify-content: flex-start;
+//   align-items: center;
+// }
+
+// .sidebar.expanded .hover-left-border a {
+//   justify-content: flex-start;
+// }
+
+// .hover-left-border::before {
+//   content: "";
+//   /* Create an empty content */
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   height: 100%;
+//   width: 5%;
+//   /* 10% width for the yellow border */
+//   // background-color: var(--DcodzYellow);
+//   /* Yellow color for the left border */
+//   opacity: 0;
+//   /* Initially invisible */
+//   transition: opacity 0.3s;
+//   /* Smooth transition */
+// }
+
+// .hover-left-border:hover::before {
+//   opacity: 1;
+//   /* Make the yellow border visible on hover */
+// }
+
+// .hover-left-border:hover {
+//   background-color: #EE7203
+//     /* Transparent yellow background */
+// }
+
+// a {
+//   text-align: center;
+// }
+
+// @media (max-width: 1024px) {
+//   .sidebar {
+//     width: 100%;
+//     // border-top-right-radius: 60px;
+//   }
+
+//   .sidebar.expanded .top-link {
+//     margin-top: 20%;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//   }
+
+//   .sidebar.expanded .middle-links {
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: flex-start;
+//     align-items: center;
+//     gap: 5%;
+//     width: 100%;
+//     // margin-top: 40% !important;
+//     // margin: auto;
+//   }
+// }
+
+// @media (max-width: 500px) {
+//   .sidebar {
+//     width: 100%;
+//     margin: auto;
+//     // border-top-right-radius: 60px;
+//   }
+
+//   .sidebar.expanded .top-link {
+//     margin-top: 30%;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//   }
+
+//   .sidebar.expanded .middle-links {
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: flex-start;
+//     align-items: center;
+//     gap: 5%;
+//     width: 100%;
+//     // margin: auto;
+//   }
+// }
+
+// @media (max-height: 1500px) {
+//   .sidebar.expanded {
+//     display: flex;
+//     justify-content: flex-start;
+//     align-items: center;
+//     gap: 3%;
+//   }
+
+//   .sidebar.expanded .top-link {
+//     margin-top: 5%;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//   }
+
+//   .sidebar.expanded .middle-links {
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: flex-start;
+//     align-items: center;
+//     gap: 1%;
+//     width: 100%;
+//     // margin-top: -90% !important;
+//     // margin: auto;
+//   }
+
+//   .sidebar.expanded .hover-left-border {
+//     padding: 0%;
+//   }
+// }
+
+// @media (max-height: 1500px) {
+//   .sidebar .middle-links {
+//     margin-top: 6%;
+//   }
+
+//   .sidebar .bottom-link {
+//     margin-bottom: 2%;
+//   }
+// }
+
+// @media (max-height: 800px) {
+//   .sidebar.expanded .middle-links {
+//     margin-top: 1% !important;
+//   }
+// }
+
+// .line {
+//   width: 110%;
+//   height: .5px;
+//   background-color: rgba($color: #FFFFFF, $alpha: .5);
+// }
+
+
+// .orderImage {
+//   position: absolute;
+//   bottom: 0;
+// }
+
+
+
+// @media (max-width: 1024px) and (min-width:767px) {
+
+//   span {
+//     display: none !important;
+//   }
+
+//   .sidebar.expanded .hover-left-border {
+//     display: flex;
+//     justify-content: center;
+//   }
+
+//   .icons {
+//     width: 40px !important;
+//   }
+
+//   .orderImage {
+//     position: absolute;
+//     z-index: 100;
+//     bottom: 0;
+
+//     img {
+//       width: 15vw;
+
+
+//     }
+//   }
+
+
+
+
+// }
+
+
+// @media (max-height: 450px) {
+
+
+//   .icons {
+//     width: 30px !important;
+//   }
+
+
+//   .orderImage {
+//     position: absolute;
+//     z-index: 100;
+//     bottom: 0;
+
+//     img {
+//       width: 20vh;
+
+
+//     }
+//   }
+
+
+// }
