@@ -1,23 +1,66 @@
-<div *ngIf="hideScrollbar==false" class="main-content tw-flex tw-h-screen">
-  <!-- Sidebar -->
-  <div [ngClass]="{ expanded: isSidebarExpanded }" class="sidebar tw-h-full tw-transition-all tw-duration-300">
+<div *ngIf="!hideScrollbar" class="main-content tw-flex tw-h-screen">
+
+  <!-- Sidebar - Desktop Only (> 1024px) -->
+  <div *ngIf="isDesktopView" [ngClass]="{ 'expanded': isSidebarExpanded }"
+    class="sidebar tw-h-full tw-transition-all tw-duration-300">
     <app-sidebar [isSidebarExpanded]="isSidebarExpanded" (toggle)="toggleSidebar()"></app-sidebar>
   </div>
 
   <!-- Main Area -->
+  <div [ngClass]="{
+         'minimized': isSidebarExpanded && isDesktopView
+       }" class="main-area tw-flex-1 tw-flex tw-flex-col tw-h-full tw-transition-all tw-duration-300">
+
+    <!-- Mobile Header with Hamburger (< 768px) -->
+    <div *ngIf="isMobileView"
+      class="mobile-header tw-flex tw-items-center tw-justify-between tw-p-4 tw-bg-white tw-border-b tw-border-gray-200">
+      <h1 class="tw-text-lg tw-font-semibold tw-text-gray-800">Classified Ad</h1>
+      <button (click)="toggleMobileMenu()"
+        class="tw-p-2 tw-rounded-lg tw-bg-gray-100 hover:tw-bg-gray-200 tw-transition-colors">
+        <i class="pi" [ngClass]="isMenubarVisible ? 'pi pi-times' : 'pi pi-bars'"
+          class="tw-text-xl tw-text-gray-700"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Menu Overlay (< 768px) -->
+    <div *ngIf="isMobileView && isMenubarVisible"
+      class="mobile-menu-overlay tw-fixed tw-inset-0 tw-z-50 tw-bg-white tw-overflow-y-auto" style="top: 60px;">
+      <div class="tw-p-4">
+        <h3 class="tw-text-gray-700 tw-font-medium tw-mb-4">Select Category</h3>
+        <app-sidebar [isSidebarExpanded]="true" (categorySelected)="isMenubarVisible = false"></app-sidebar>
+      </div>
+    </div>
+
+    <!-- Backdrop for mobile menu -->
+    <div *ngIf="isMobileView && isMenubarVisible" class="tw-fixed tw-inset-0 tw-bg-black tw-bg-opacity-50 tw-z-40"
+      style="top: 60px;" (click)="isMenubarVisible = false"></div>
+
+    <!-- Rest Layout -->
+    <div class="rest-layout tw-overflow-y-auto tw-flex-1">
+      <div class="main-layout tw-w-full">
+        <app-main class="tw-w-full"></app-main>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="hideScrollbar">
+  <router-outlet></router-outlet>
+</div>
+
+<!-- <div *ngIf="hideScrollbar==false" class="main-content tw-flex tw-h-screen">
+  <div [ngClass]="{ expanded: isSidebarExpanded }" class="sidebar tw-h-full tw-transition-all tw-duration-300">
+    <app-sidebar [isSidebarExpanded]="isSidebarExpanded" (toggle)="toggleSidebar()"></app-sidebar>
+  </div>
+
   <div [ngClass]="{ minimized: isSidebarExpanded }"
     class="main-area tw-flex-1 tw-flex tw-flex-col tw-h-full tw-transition-all tw-duration-300">
-    <!-- Header -->
-    <!-- <div class="header-layout tw-h-20 tw-p-1.5" style="z-index: 1000; width: 100%">
-      <app-header [isSidebarExpanded]="isSidebarExpanded" (toggle)="toggleSidebar()"></app-header>
-    </div> -->
+
 
     <div *ngIf="isMobileView && isMenubarVisible" class="menubar-overlay">
       <app-menu-bar (menuBarToggle)="isMenubarVisible = false"></app-menu-bar>
     </div>
-    <!-- Rest Layout -->
     <div class="rest-layout tw-overflow-y-auto">
-      <!-- Main Content -->
       <div class="main-layout tw-w-full tw-flex-1">
         <app-main class="tw-w-full"></app-main>
       </div>
@@ -30,4 +73,4 @@
 <div *ngIf="hideScrollbar==true">
 
   <router-outlet></router-outlet>
-</div>
+</div> -->

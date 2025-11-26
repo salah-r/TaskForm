@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit {
     this.isDropdownOpen = false;
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.checkScreenWidth();
     window.addEventListener('resize', this.checkScreenWidth.bind(this));
   }

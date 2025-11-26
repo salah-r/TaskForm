@@ -35,7 +35,7 @@ export class PhoneInputComponent implements OnInit, ControlValueAccessor {
 
   constructor(private dataService: StaticDataService) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.countryCodes = this.dataService.countryCodes;
     if (this.countryCodes.length > 0) {
       this.selectedCountry = this.countryCodes[0];
@@ -43,54 +43,54 @@ export class PhoneInputComponent implements OnInit, ControlValueAccessor {
   }
 
   // ControlValueAccessor methods
-  writeValue(value: PhoneValue): void {
+  writeValue(value: PhoneValue) {
     if (value) {
       this.selectedCountry = this.countryCodes.find(c => c.code === value.countryCode) || this.countryCodes[0];
       this.phoneNumber = value.phoneNumber || '';
     }
   }
 
-  registerOnChange(fn: (value: PhoneValue) => void): void {
+  registerOnChange(fn: (value: PhoneValue) => void) {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: () => void): void {
+  registerOnTouched(fn: () => void) {
     this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
+  setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;
   }
 
   // Component methods
-  toggleDropdown(): void {
+  toggleDropdown() {
     if (!this.disabled) {
       this.isDropdownOpen = !this.isDropdownOpen;
     }
   }
 
-  selectCountry(country: ICountryCode): void {
+  selectCountry(country: ICountryCode) {
     this.selectedCountry = country;
     this.isDropdownOpen = false;
     this.emitValue();
   }
 
-  onPhoneInput(event: Event): void {
+  onPhoneInput(event: Event) {
     const input = event.target as HTMLInputElement;
     // Only allow numbers
     this.phoneNumber = input.value.replace(/[^0-9]/g, '');
     this.emitValue();
   }
 
-  onBlur(): void {
+  onBlur() {
     this.onTouched();
   }
 
-  closeDropdown(): void {
+  closeDropdown() {
     this.isDropdownOpen = false;
   }
 
-  private emitValue(): void {
+  private emitValue() {
     this.onChange({
       countryCode: this.selectedCountry?.code || '',
       phoneNumber: this.phoneNumber

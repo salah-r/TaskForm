@@ -1,52 +1,59 @@
-import { Component, OnInit, OnDestroy, Output } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { Component, OnInit, OnDestroy, HostListener, ChangeDetectorRef } from '@angular/core';
+import { Router, } from '@angular/router';
+
 @Component({
   selector: 'app-full-layout',
   templateUrl: './full-layout.component.html',
   styleUrls: ['./full-layout.component.scss'],
 })
 export class FullLayoutComponent implements OnInit, OnDestroy {
-  private urlSubscription: any;
 
   isSidebarExpanded = true;
-  isMobileView = false;
+  isMobileView = false;      // < 768px
+  isTabletView = false;      // 768px - 1024px
+  isDesktopView = true;      // > 1024px
   isMenubarVisible = false;
   hideScrollbar: boolean = false;
-  constructor(private router: Router) { }
 
-  ngOnInit(): void {
+  constructor(
+    private router: Router,
+    private ref: ChangeDetectorRef
+  ) { }
+
+  ngOnInit() {
     this.checkScreenWidth();
 
-    this.urlSubscription = this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe(() => {
-      this.detectURL();
-    });
 
-    window.addEventListener('resize', this.checkScreenWidth.bind(this));
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.checkScreenWidth();
+    this.ref.detectChanges();
   }
 
   checkScreenWidth() {
-    this.isMobileView = window.innerWidth <= 768;
-    if (this.isMobileView) {
-      this.isSidebarExpanded = false; // Hide sidebar by default on mobile view
-    }
-  }
+    const width = window.innerWidth;
 
+    this.isMobileView = false;
+    this.isTabletView = false;
+    this.isDesktopView = false;
 
-  detectURL() {
-    // Get current URL
-    const currentURL = this.router.url;
-
-    // Check if it contains '/signin'
-    if (currentURL.includes('/signin') || currentURL.includes('/home') || currentURL.includes('/order-details')) {
-      this.hideScrollbar = true
+    if (width < 768) {
+      this.isMobileView = true;
+      this.isSidebarExpanded = false;
+    } else if (width >= 768 && width < 1025) {
+      this.isTabletView = true;
+      this.isSidebarExpanded = false;
     } else {
-      this.hideScrollbar = false
+      this.isDesktopView = true;
+      this.isSidebarExpanded = true;
+    }
 
-    };
+    // console.log('Screen:', { width, mobile: this.isMobileView, tablet: this.isTabletView, desktop: this.isDesktopView });
   }
+
+
 
   toggleSidebar() {
     if (this.isMobileView) {
@@ -56,7 +63,11 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
+  toggleMobileMenu() {
+    this.isMenubarVisible = !this.isMenubarVisible;
+  }
+
   ngOnDestroy() {
-    window.removeEventListener('resize', this.checkScreenWidth.bind(this));
+
   }
 }

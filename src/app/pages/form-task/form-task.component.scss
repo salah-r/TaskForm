@@ -5,13 +5,17 @@
 
 input {
   border: 1px solid #d1d5db !important;
+  height: 56px !important;
 }
 
-// Primary Color
+.gray-border {
+  border: 2px solid #d1d5db !important;
+}
+
+
 $primary-color: #14C3AF;
 $primary-light: rgba(20, 195, 175, 0.1);
 
-// Custom Classes
 .tw-text-primary {
   color: $primary-color;
 }
@@ -44,7 +48,12 @@ $primary-light: rgba(20, 195, 175, 0.1);
   --tw-ring-color: rgba(20, 195, 175, 0.2);
 }
 
-// PrimeNG Calendar Override (Gray Icon Inside Input)
+// Compact category button for tablet
+.category-btn-compact {
+  flex-shrink: 0;
+}
+
+// PrimeNG Overrides
 ::ng-deep {
   .custom-calendar {
     width: 100%;
@@ -67,7 +76,6 @@ $primary-light: rgba(20, 195, 175, 0.1);
       }
     }
 
-    // Icon inside input (gray color)
     .p-datepicker-trigger {
       position: absolute;
       right: 0.75rem;
@@ -75,7 +83,7 @@ $primary-light: rgba(20, 195, 175, 0.1);
       transform: translateY(-50%);
       background: transparent;
       border: none;
-      color: #9ca3af; // Gray color
+      color: #9ca3af;
 
       &:hover {
         background: transparent;
@@ -87,39 +95,26 @@ $primary-light: rgba(20, 195, 175, 0.1);
         color: #9ca3af;
       }
     }
+  }
 
-    .p-calendar-w-btn {
-      .p-inputtext {
-        border-radius: 0.5rem;
-      }
+  .p-radiobutton .p-radiobutton-box {
+    border-color: #d1d5db;
+
+    &.p-highlight {
+      background-color: $primary-color;
+      border-color: $primary-color;
     }
   }
 
-  // Radio Button Override
-  .p-radiobutton {
-    .p-radiobutton-box {
-      border-color: #d1d5db;
+  .p-checkbox .p-checkbox-box {
+    border-color: #d1d5db;
 
-      &.p-highlight {
-        background-color: $primary-color;
-        border-color: $primary-color;
-      }
+    &.p-highlight {
+      background-color: $primary-color;
+      border-color: $primary-color;
     }
   }
 
-  // Checkbox Override
-  .p-checkbox {
-    .p-checkbox-box {
-      border-color: #d1d5db;
-
-      &.p-highlight {
-        background-color: $primary-color;
-        border-color: $primary-color;
-      }
-    }
-  }
-
-  // Button Override
   .p-button {
     background-color: $primary-color;
     border-color: $primary-color;
@@ -133,9 +128,13 @@ $primary-light: rgba(20, 195, 175, 0.1);
       box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px rgba(20, 195, 175, 0.4);
     }
   }
+
+  span.p-button-label,
+  span.p-button-icon {
+    color: white !important;
+  }
 }
 
-// Dropdown scrollbar
 ul {
   &::-webkit-scrollbar {
     width: 5px;
@@ -147,15 +146,180 @@ ul {
   }
 }
 
-
-::ng-deep span.p-button-label {
-  color: white !important;
-}
-
-::ng-deep span.p-button-icon.p-button-icon-left.pi.pi-check {
-  color: white !important;
-}
-
 .gray-border {
   border: 2px solid #d1d5db !important;
 }
+
+// Responsive
+@media (max-width: 640px) {
+  .post-ad-container {
+    padding: 0.5rem;
+  }
+}
+
+
+
+
+
+
+// * {
+//   direction: ltr !important;
+//   text-align: left !important;
+// }
+
+// input {
+//   border: 1px solid #d1d5db !important;
+// }
+
+// // Primary Color
+// $primary-color: #14C3AF;
+// $primary-light: rgba(20, 195, 175, 0.1);
+
+// // Custom Classes
+// .tw-text-primary {
+//   color: $primary-color;
+// }
+
+// .tw-bg-primary {
+//   background-color: $primary-color;
+// }
+
+// .tw-bg-primary-light {
+//   background-color: $primary-light;
+// }
+
+// .tw-border-primary {
+//   border-color: $primary-color;
+// }
+
+// .focus\:tw-border-primary:focus {
+//   border-color: $primary-color;
+// }
+
+// .hover\:tw-border-primary:hover {
+//   border-color: $primary-color;
+// }
+
+// .hover\:tw-bg-primary-light:hover {
+//   background-color: $primary-light;
+// }
+
+// .focus\:tw-ring-primary\/20:focus {
+//   --tw-ring-color: rgba(20, 195, 175, 0.2);
+// }
+
+// // PrimeNG Calendar Override (Gray Icon Inside Input)
+// ::ng-deep {
+//   .custom-calendar {
+//     width: 100%;
+
+//     .p-calendar {
+//       width: 100%;
+//     }
+
+//     .p-inputtext {
+//       width: 100%;
+//       padding: 0.625rem 1rem;
+//       padding-right: 2.5rem;
+//       border-radius: 0.5rem;
+//       border: 1px solid #d1d5db;
+//       font-size: 0.875rem;
+
+//       &:focus {
+//         border-color: $primary-color;
+//         box-shadow: 0 0 0 2px rgba(20, 195, 175, 0.2);
+//       }
+//     }
+
+//     // Icon inside input (gray color)
+//     .p-datepicker-trigger {
+//       position: absolute;
+//       right: 0.75rem;
+//       top: 50%;
+//       transform: translateY(-50%);
+//       background: transparent;
+//       border: none;
+//       color: #9ca3af; // Gray color
+
+//       &:hover {
+//         background: transparent;
+//         color: #6b7280;
+//       }
+
+//       .pi-calendar {
+//         font-size: 1rem;
+//         color: #9ca3af;
+//       }
+//     }
+
+//     .p-calendar-w-btn {
+//       .p-inputtext {
+//         border-radius: 0.5rem;
+//       }
+//     }
+//   }
+
+//   // Radio Button Override
+//   .p-radiobutton {
+//     .p-radiobutton-box {
+//       border-color: #d1d5db;
+
+//       &.p-highlight {
+//         background-color: $primary-color;
+//         border-color: $primary-color;
+//       }
+//     }
+//   }
+
+//   // Checkbox Override
+//   .p-checkbox {
+//     .p-checkbox-box {
+//       border-color: #d1d5db;
+
+//       &.p-highlight {
+//         background-color: $primary-color;
+//         border-color: $primary-color;
+//       }
+//     }
+//   }
+
+//   // Button Override
+//   .p-button {
+//     background-color: $primary-color;
+//     border-color: $primary-color;
+
+//     &:hover {
+//       background-color: darken($primary-color, 8%);
+//       border-color: darken($primary-color, 8%);
+//     }
+
+//     &:focus {
+//       box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px rgba(20, 195, 175, 0.4);
+//     }
+//   }
+// }
+
+// // Dropdown scrollbar
+// ul {
+//   &::-webkit-scrollbar {
+//     width: 5px;
+//   }
+
+//   &::-webkit-scrollbar-thumb {
+//     background: $primary-color;
+//     border-radius: 3px;
+//   }
+// }
+
+
+// ::ng-deep span.p-button-label {
+//   color: white !important;
+// }
+
+// ::ng-deep span.p-button-icon.p-button-icon-left.pi.pi-check {
+//   color: white !important;
+// }
+
+// .gray-border {
+//   border: 2px solid #d1d5db !important;
+// }

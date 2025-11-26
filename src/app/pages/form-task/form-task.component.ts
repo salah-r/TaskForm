@@ -1,11 +1,11 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ICategory } from 'src/app/interfaces/ICategory';
 import { ICurrency } from 'src/app/interfaces/ICurrency';
 import { ICountryCode } from 'src/app/interfaces/ICountryCode';
 import { StaticDataService } from 'src/app/services/static-data/static-data.service';
-
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-form-task',
   templateUrl: './form-task.component.html',
@@ -26,18 +26,29 @@ export class FormTaskComponent implements OnInit {
   // Dropdown States
   isCurrencyDropdownOpen: boolean = false;
   isCountryCodeDropdownOpen: boolean = false;
-
+  isMobile: boolean = false;
   // Date picker
   minDate: Date = new Date();
+  // Screen size detection
+  isTablet: boolean = false;
+  isDesktop: boolean = true;
+  forceCurrencyClose: boolean;
+
+
+
 
   constructor(
     private fb: FormBuilder,
+    private ref: ChangeDetectorRef,
+    private messageService: MessageService,
     private staticDataService: StaticDataService
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.loadStaticData();
     this.setDefaultValues();
+    this.checkScreenSize();
+
     this.staticDataService.selectedCategory$.subscribe(category => {
       if (category) {
         this.selectedCategory = category;
@@ -46,6 +57,12 @@ export class FormTaskComponent implements OnInit {
         this.selectCategory(this.categories[0])
       }
     });
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.checkScreenSize();
+    this.ref.detectChanges();
   }
 
   // Form Definition (Your Style)
@@ -111,14 +128,14 @@ export class FormTaskComponent implements OnInit {
   }
 
   // Load Data
-  loadStaticData(): void {
+  loadStaticData() {
     this.categories = this.staticDataService.categories;
     this.currencies = this.staticDataService.Currencies;
     this.countryCodes = this.staticDataService.countryCodes;
   }
 
   // Set Default Values
-  setDefaultValues(): void {
+  setDefaultValues() {
     // Select first category by default
     if (this.categories.length > 0) {
       this.selectCategory(this.categories[0]);
@@ -136,7 +153,7 @@ export class FormTaskComponent implements OnInit {
   }
 
   // Category Selection (Two-way sync)
-  selectCategory(category: ICategory): void {
+  selectCategory(category: ICategory) {
     this.selectedCategory = category;
     this.adForm.patchValue({ categoryId: category.id });
     this.staticDataService.setSelectedCategory(category);
@@ -148,38 +165,38 @@ export class FormTaskComponent implements OnInit {
   }
 
   // Currency Dropdown
-  toggleCurrencyDropdown(): void {
+  toggleCurrencyDropdown() {
     this.isCurrencyDropdownOpen = !this.isCurrencyDropdownOpen;
     this.isCountryCodeDropdownOpen = false; // Close other dropdown
   }
 
-  selectCurrency(currency: ICurrency): void {
+  selectCurrency(currency: ICurrency) {
     this.selectedCurrency = currency;
     this.adForm.patchValue({ currency: currency.code });
     this.isCurrencyDropdownOpen = false;
   }
 
   // Country Code Dropdown
-  toggleCountryCodeDropdown(): void {
+  toggleCountryCodeDropdown() {
     this.isCountryCodeDropdownOpen = !this.isCountryCodeDropdownOpen;
     this.isCurrencyDropdownOpen = false; // Close other dropdown
   }
 
-  selectCountryCode(country: ICountryCode): void {
+  selectCountryCode(country: ICountryCode) {
     this.selectedCountryCode = country;
     this.adForm.patchValue({ countryCode: country.code });
     this.isCountryCodeDropdownOpen = false;
   }
 
   // Close dropdowns when clicking outside
-  closeDropdowns(): void {
+  closeDropdowns() {
     this.isCurrencyDropdownOpen = false;
     this.isCountryCodeDropdownOpen = false;
+    this.forceCurrencyClose = true
   }
 
   // Save/Submit Function (Your Style - Button Click)
-  saveAd(): void {
-    console.log('Form Values:', this.adForm.value);
+  saveAd() {
 
     if (this.adForm.valid) {
       const adData = {
@@ -202,6 +219,25 @@ export class FormTaskComponent implements OnInit {
       };
 
       console.log('Submitting Ad:', adData);
+      const existing = localStorage.getItem('savedData');
+      const parsedArray = existing ? JSON.parse(existing) : [];
+
+      // 2️⃣ Push new ad object
+      parsedArray.push(adData);
+
+      // 3️⃣ Save again
+      localStorage.setItem('savedData', JSON.stringify(parsedArray));
+
+      // 4️⃣ Show confirmation message
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Data saved successfully to localStorage',
+        life: 2500
+      });
+
+      // Optionally reset form
+      this.adForm.reset();
 
       // TODO: Call your service here
       // this.adService.createAd(adData).subscribe({...});
@@ -213,4 +249,19 @@ export class FormTaskComponent implements OnInit {
       });
     }
   }
+
+  checkScreenSize() {
+    const width = window.innerWidth;
+
+    this.isMobile = width < 768;
+    this.isTablet = width >= 768 && width < 1025;
+    this.isDesktop = width > 1024;
+
+  }
+
+  stopEvent(event: Event) {
+    event.stopPropagation();
+  }
+
+
 }

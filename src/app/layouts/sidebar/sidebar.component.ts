@@ -79,7 +79,7 @@ export class SidebarComponent implements OnInit {
 // export class SidebarComponent implements OnInit {
 //   @Input() isSidebarExpanded = false; // Receive sidebar state from parent
 
-//   ngOnInit(): void {
+//   ngOnInit() {
 //     // Any other initialization logic can go here
 //   }
 

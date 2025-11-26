@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ICurrency } from 'src/app/interfaces/ICurrency';
 import { StaticDataService } from 'src/app/services/static-data/static-data.service';
@@ -19,23 +19,26 @@ export class CurrencySelectorComponent implements OnInit, ControlValueAccessor {
 
   @Input() placeholder: string = 'Currency';
   @Input() disabled: boolean = false;
+  @Input() forceClose: boolean = false; // Parent can force close dropdown
+  @Output() onSelect = new EventEmitter<ICurrency>();
 
   currencies: ICurrency[] = [];
   selectedCurrency: ICurrency | null = null;
   isOpen: boolean = false;
-
   // ControlValueAccessor properties
   private onChange: (value: string) => void = () => { };
   private onTouched: () => void = () => { };
 
   constructor(private dataService: StaticDataService) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.currencies = this.dataService.Currencies;
   }
 
+
+
   // ControlValueAccessor methods
-  writeValue(value: string): void {
+  writeValue(value: string) {
     if (value) {
       this.selectedCurrency = this.currencies.find(c => c.code === value) || null;
     } else {
@@ -43,20 +46,20 @@ export class CurrencySelectorComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  registerOnChange(fn: (value: string) => void): void {
+  registerOnChange(fn: (value: string) => void) {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: () => void): void {
+  registerOnTouched(fn: () => void) {
     this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
+  setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;
   }
 
   // Component methods
-  toggleDropdown(): void {
+  toggleDropdown() {
     if (!this.disabled) {
       this.isOpen = !this.isOpen;
       if (this.isOpen) {
@@ -65,13 +68,13 @@ export class CurrencySelectorComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  selectCurrency(currency: ICurrency): void {
+  selectCurrency(currency: ICurrency) {
     this.selectedCurrency = currency;
     this.onChange(currency.code);
     this.isOpen = false;
   }
 
-  closeDropdown(): void {
+  closeDropdown() {
     this.isOpen = false;
   }
 }
